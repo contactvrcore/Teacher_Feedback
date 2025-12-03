@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model NpsScore {
+  id           String   @id @default(uuid())
+  teacherEmail String?
+  score        Int
+  clickedAt    DateTime @default(now()) @db.Timestamptz
+  userAgent    String?
+  ipAddress    String?
+  campaignId   String?
+  token        String   @unique
+  meta         Json?
+  source       String?  @default("email")
+
+  @@index([clickedAt])
+  @@index([campaignId])
+}
+
